@@ -14,30 +14,30 @@ var oq1 = {
     answer4: "incorrect",
 }
 var oq2 = {
-    answer1: "correct",
-    answer2: "incorrect",
+    answer1: "incorrect",
+    answer2: "correct",
     answer3: "incorrect",
     answer4: "incorrect",
 }
 
 var oq3 = {
-    answer1: "correct",
+    answer1: "incorrect",
     answer2: "incorrect",
-    answer3: "incorrect",
+    answer3: "correct",
     answer4: "incorrect",
 }
 
 var oq4 = {
-    answer1: "correct",
+    answer1: "incorrect",
     answer2: "incorrect",
     answer3: "incorrect",
-    answer4: "incorrect",
+    answer4: "correct",
 }
 
-var q1 = [oq1, "question1", "answer1", "answer2", "answer3", "answer4"];
-var q2 = [oq2, "question2", "answer1", "answer2", "answer3", "answer4"];
-var q3 = [oq3, "question3", "answer1", "answer2", "answer3", "answer4"];
-var q4 = [oq4, "question4", "answer1", "answer2", "answer3", "answer4"];
+var q1 = [oq1, "Which one is the correct answer 1", "answer1", "answer2", "answer3", "answer4"];
+var q2 = [oq2, "Which one is the correct answer 2", "answer1", "answer2", "answer3", "answer4"];
+var q3 = [oq3, "Which one is the correct answer 3", "answer1", "answer2", "answer3", "answer4"];
+var q4 = [oq4, "Which one is the correct answer 4", "answer1", "answer2", "answer3", "answer4"];
 var allq = [q1, q2, q3, q4];
 var newQ = [...allq];
 
