@@ -16,7 +16,7 @@ var question = [
         prompt: 'document.querySelectorAll() will return what when called',
         selection: [
             {
-                answer: 'Te first instance of an element matching the call',
+                answer: 'The first instance of an element matching the call',
                 correct: false
             },
             {
@@ -125,9 +125,9 @@ leaderboard.style.display = 'none'
 var generateQ = () => {
     points.textContent = `Score: ${localStorage.getItem('score')}`;
     if (x < question.length) {
-        quest.textContent = question.prompt;
         let chosen = Math.floor(Math.random() * qarray.length);
-        for (i = 0; i < question[1].selection.length; i++) {
+        quest.textContent = question[chosen].prompt;
+        for (i = 0; i < question[0].selection.length; i++) {
             var answer = document.createElement('button');
             answer.classList.add(`answer`);
             answer.id = `${qarray[chosen].selection[i].correct}`
@@ -173,6 +173,7 @@ var startTimer = function () {
 
         if (newTime <= 0) {
             clearInterval(timeInterval)
+            ans.innerHTML = '';
             timeEl.textContent = "Quiz over";
             quizSection.style.display = 'none';
             begin.style.display = '';
