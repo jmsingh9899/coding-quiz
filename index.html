@@ -5,31 +5,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/styles.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="./assets/styles.css">
+    <title>Coding Quiz</title>
 </head>
 
 <body>
-    <header>
-        <p id="timer"></p>
-        <p id="score"></p>
-        <h1 id="question-space"></h1>
-        <ol type="" id="answers"></ol>
-        <div id='interactions' style="display: none;" >
-            <label for="initials" id="name">Enter your initials to save your high score</label>
-            <input type="text" name="intials" id="highInitial">
+    <p id='timer'></p>
+    <div class="row">
+        <div>
+            <div>
+                <h1>Coding Quiz</h1>
+                <button id="startButton">Begin Quiz</button>
+            </div>
+            <div id='quizSection'>
+                <h2 id='question'></h2>
+                <div id='answers'></div>
+                <p id='res'></p>
+            </div>
+            <div id='score'></div>
+            <div id="leaderboard">
+                <form id='challenger'>
+                    <label for="intitials">Initials:</label><br>
+                    <input type="text" id="initials" name="initials"><br>
+                    <input type="submit" value="Submit">
+                </form>
+                <h2>HighScore</h2>
+                <ol id='leads'>
+                    <li id='leader'></li>
+                </ol>
+            </div>
         </div>
-        <button id="start">Start Game</button>
-    </header>
-    <main>
-
-    </main>
-    <footer>
-
-    </footer>
-
-
-    <script src="assets/script.js"></script>
+    </div class="row">
+    <script src="./assets/script.js"></script>
 </body>
 
 </html>

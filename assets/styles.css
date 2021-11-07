@@ -1,8 +1,15 @@
-
-#timer {
-    text-align: right;
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
-
-#score {
-    text-align: left;
+#timer{
+    display: flex;
+    justify-content: flex-start;
+}
+#leaderboard{
+}
+.answer{
+    margin: 20px;
+    display: block;
 }

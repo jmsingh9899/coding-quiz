@@ -1,111 +1,169 @@
-var timeEl = document.querySelector("#timer");
-var scoreEl = document.querySelector("#score")
-var gameStart = document.querySelector("#start");
-var problem = document.querySelector("#question-space");
-var solutions = document.querySelector("#answers");
-var highscoreForm = document.querySelector("#interactions");
-var points = 0;
-
-
-var oq1 = {
-    answer1: "correct",
-    answer2: "incorrect",
-    answer3: "incorrect",
-    answer4: "incorrect",
-}
-var oq2 = {
-    answer1: "incorrect",
-    answer2: "correct",
-    answer3: "incorrect",
-    answer4: "incorrect",
-}
-
-var oq3 = {
-    answer1: "incorrect",
-    answer2: "incorrect",
-    answer3: "correct",
-    answer4: "incorrect",
-}
-
-var oq4 = {
-    answer1: "incorrect",
-    answer2: "incorrect",
-    answer3: "incorrect",
-    answer4: "correct",
-}
-
-var q1 = [oq1, "Which one is the correct answer 1", "answer1", "answer2", "answer3", "answer4"];
-var q2 = [oq2, "Which one is the correct answer 2", "answer1", "answer2", "answer3", "answer4"];
-var q3 = [oq3, "Which one is the correct answer 3", "answer1", "answer2", "answer3", "answer4"];
-var q4 = [oq4, "Which one is the correct answer 4", "answer1", "answer2", "answer3", "answer4"];
-var allq = [q1, q2, q3, q4];
-var newQ = [...allq];
-
-//stop game
-var stopGame = function () {
-    highscoreForm.style.display = "";
-    gameStart.style.display = "";
-    problem.style.display = "none";
-    solutions.style.display = "none";
-    newQ = [...allq];
-    points = 0;
-}
-
-//no more questions 
-var noQuestions = function (x) {
-    if (x.length == 0) {
-        localStorage.setItem("currentTime", 0);
-    }
-}
-
-//declare highscore
-var highscore = function() {
-
-}
-
-
-//Generate question
-var questionGenerator = function () {
-    scoreEl.textContent = points;
-    var quiz = Math.floor(Math.random() * newQ.length);
-    var currentQuiz = newQ[quiz];
-    newQ.splice(quiz, 1)
-    problem.textContent = currentQuiz[1];
-    for (i = 2; i < currentQuiz.length; i++) {
-        var newQuestion = document.createElement("li");
-        var newerQuestion = document.createElement("button");
-        newQuestion.className = `${currentQuiz[0][`${currentQuiz[i]}`]}`;
-        newerQuestion.textContent = `${currentQuiz[i]}`;
-        newQuestion.append(newerQuestion);
-        solutions.append(newQuestion);
-        var correctAnswer = document.querySelector(".correct");
-        var incorrectAnswer = document.querySelector(".incorrect");
-    }
-    correctAnswer.addEventListener("click", function () {
-        var currentTime = parseInt(localStorage.getItem("currentTime"));
-        points = points + currentTime;
-        console.log(points);
-        solutions.innerHTML = '';
-        scoreEl.textContent = points;
-        localStorage.setItem("score", points);
-        noQuestions(newQ);
-        questionGenerator();
-    })
-    incorrectAnswer.addEventListener("click", function () {
-        var timeChange = parseInt(localStorage.getItem("currentTime"));
-        var newTime = timeChange - 5;
-        localStorage.setItem("currentTime", newTime);
-        solutions.innerHTML = '';
-        noQuestions(newQ);
-        questionGenerator();
-    })
-}
-
-
-
+var begin = document.getElementById('startButton');
+var timeEl = document.getElementById('timer');
+var quizSection = document.getElementById('quizSection');
+var points = document.getElementById('score');
+var ans = document.getElementById('answers');
+var quest = document.getElementById('question');
+var form = document.getElementById('challenger');
+var res = document.getElementById('res');
+var leader = document.getElementById('leader');
+var leaderboard = document.getElementById('leaderboard');
+let x;
+let qarray
 //Quiz timer mechanic
+var question = [
+    {
+        prompt: 'document.querySelectorAll() will return what when called',
+        selection: [
+            {
+                answer: 'Te first instance of an element matching the call',
+                correct: false
+            },
+            {
+                answer: 'A string of all the available elments matching that string',
+                correct: false
+            },
+            {
+                answer: 'An array of all the available elments matching that string',
+                correct: false
+            },
+            {
+                answer: 'An Nodelist of all the available elments matching that string',
+                correct: true
+            },
+        ]
+    }, {
+        prompt: 'Async functions allow the code too',
+        selection: [
+            {
+                answer: 'Run multiple functions at the same',
+                correct: false
+            },
+            {
+                answer: 'Run the code sequentially without interruptions',
+                correct: false
+            },
+            {
+                answer: 'Pause the code and await completion where specified',
+                correct: true
+            },
+            {
+                answer: 'Runs all the code simultaenously',
+                correct: false
+            },
+        ]
+    }, {
+        prompt: 'OOP stands for ',
+        selection: [
+            {
+                answer: 'Operationally Optimized Prgramming',
+                correct: false
+            },
+            {
+                answer: 'Object Oriented Programming',
+                correct: true
+            },
+            {
+                answer: 'Object Optimized Programming',
+                correct: false
+            },
+            {
+                answer: 'Operationally Oriented Programming',
+                correct: false
+            },
+        ]
+    }, {
+        prompt: 'Error code 497',
+        selection: [
+            {
+                answer: 'The inability to dowload an app to a cellular device',
+                correct: true
+            },
+            {
+                answer: 'Authorization not provided',
+                correct: false
+            },
+            {
+                answer: 'Certificate required',
+                correct: false
+            },
+            {
+                answer: 'The token being utilized is invalid',
+                correct: false
+            },
+        ]
+    },
+]
+
+
+var increaseScore = () => {
+    currentScore = parseInt(localStorage.getItem('score'));
+    increment = parseInt(localStorage.getItem('currentTime'));
+    newScore = currentScore + increment;
+    localStorage.setItem('score', newScore);
+    points.textContent = `Score: ${localStorage.getItem('score')}`;
+}
+var decreaseTime = () => {
+    time = parseInt(localStorage.getItem('currentTime'));
+    newTime = time - 2;
+    localStorage.setItem('currentTime', newTime);
+}
+var gameOver = () => {
+    localStorage.setItem("currentTime", 0)
+}
+
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var initials = document.getElementById('initials');
+    player = localStorage.setItem('player', initials.value)
+    leader.textContent = `${localStorage.getItem('player')}: ${localStorage.getItem('score')}`
+    form.style.display = 'none'
+    
+})
+leaderboard.style.display = 'none'
+
+var generateQ = () => {
+    points.textContent = `Score: ${localStorage.getItem('score')}`;
+    if (x < question.length) {
+        quest.textContent = question.prompt;
+        let chosen = Math.floor(Math.random() * qarray.length);
+        for (i = 0; i < question[1].selection.length; i++) {
+            var answer = document.createElement('button');
+            answer.classList.add(`answer`);
+            answer.id = `${qarray[chosen].selection[i].correct}`
+            answer.textContent = `${qarray[chosen].selection[i].answer}`;
+            ans.append(answer);
+        }
+        var correct = document.getElementById('true')
+        var incorrect = document.querySelectorAll('#false');
+
+        for (let i = 0; i < incorrect.length; i++) {
+            incorrect[i].addEventListener('click', function (e) {
+                res.textContent = "incorrect"
+                qarray.splice(chosen, 1)
+                e.preventDefault();
+                ans.innerHTML = '';
+                generateQ();
+                decreaseTime();
+            });}
+        
+
+        correct.addEventListener('click', function (e) {
+            res.textContent = "correct"
+            e.preventDefault();
+            qarray.splice(chosen, 1)
+            ans.innerHTML = '';
+            increaseScore();
+            generateQ();
+        })
+        x += 1
+    } else {
+        gameOver();
+    }
+
+};
 var startTimer = function () {
-    var startingTime = 30;
+    var startingTime = 20;
     localStorage.setItem("currentTime", startingTime)
     var timeInterval = setInterval(function () {
         var newTime = parseInt(localStorage.getItem("currentTime"))
@@ -115,19 +173,27 @@ var startTimer = function () {
 
         if (newTime <= 0) {
             clearInterval(timeInterval)
-            timeEl.textContent = "out of time";
-            stopGame();
+            timeEl.textContent = "Quiz over";
+            quizSection.style.display = 'none';
+            begin.style.display = '';
+            leaderboard.style.display= '';
+
         }
     }, 1000)
-}
+};
 
-gameStart.addEventListener("click", function () {
-    var newQ = [...allq];
-    gameStart.style.display = "none";
-    problem.style.display = "";
-    solutions.style.display = "";
+var gameStart = async () => {
+    x = 0
+    qarray = question.map(x => x);
+    localStorage.setItem('score', 0)
+    begin.style.display = 'none';
+    quizSection.style.display = '';
     startTimer();
-    questionGenerator();
+    generateQ();
+};
 
-})
-
+begin.addEventListener('click', function (e) {
+    e.preventDefault;
+    leaderboard.style.display = 'none'
+    gameStart()
+});
