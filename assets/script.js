@@ -10,7 +10,7 @@ var leader = document.getElementById('leader');
 var leaderboard = document.getElementById('leaderboard');
 let x;
 let qarray
-//Quiz timer mechanic
+
 var question = [
     {
         prompt: 'document.querySelectorAll() will return what when called',
@@ -118,15 +118,17 @@ form.addEventListener('submit', function (e) {
     player = localStorage.setItem('player', initials.value)
     leader.textContent = `${localStorage.getItem('player')}: ${localStorage.getItem('score')}`
     form.style.display = 'none'
-    
+
 })
 leaderboard.style.display = 'none'
 
 var generateQ = () => {
     points.textContent = `Score: ${localStorage.getItem('score')}`;
+    ans.innerHTML = '';
+    quest.innerHTML= '';
     if (x < question.length) {
         let chosen = Math.floor(Math.random() * qarray.length);
-        quest.textContent = question[chosen].prompt;
+        quest.textContent = qarray[chosen].prompt;
         for (i = 0; i < question[0].selection.length; i++) {
             var answer = document.createElement('button');
             answer.classList.add(`answer`);
@@ -139,20 +141,19 @@ var generateQ = () => {
 
         for (let i = 0; i < incorrect.length; i++) {
             incorrect[i].addEventListener('click', function (e) {
+                e.preventDefault();
                 res.textContent = "incorrect"
                 qarray.splice(chosen, 1)
-                e.preventDefault();
-                ans.innerHTML = '';
                 generateQ();
                 decreaseTime();
-            });}
-        
+            });
+        }
+
 
         correct.addEventListener('click', function (e) {
             res.textContent = "correct"
             e.preventDefault();
             qarray.splice(chosen, 1)
-            ans.innerHTML = '';
             increaseScore();
             generateQ();
         })
@@ -177,7 +178,8 @@ var startTimer = function () {
             timeEl.textContent = "Quiz over";
             quizSection.style.display = 'none';
             begin.style.display = '';
-            leaderboard.style.display= '';
+            leaderboard.style.display = '';
+            form.style.display=''
 
         }
     }, 1000)
